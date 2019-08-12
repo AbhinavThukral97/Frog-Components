@@ -6,7 +6,11 @@ import { SocialStructure } from "./ui/SocialStructure";
 function App() {
   return (
     <div className="App">
-      <SocialStructure />
+      <SocialStructure
+        socialStructure={{ groups: { "1": ["a1", "a2"] } }}
+        groupingKey="groups"
+        students={{ a1: "Creatively Named Student", a2: "Student 2" }}
+      />
     </div>
   );
 }

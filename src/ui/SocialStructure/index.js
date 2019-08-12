@@ -9,7 +9,7 @@ const useStyle = makeStyles(theme => ({
     flexWrap: "wrap",
     justifyContent: "flext-start",
     alignItems: "flex-start",
-    width: "100%",
+    width: "90%",
     margin: theme.spacing(1)
   },
   button: {
@@ -35,13 +35,12 @@ type SocialStructureProps = {
 const ungroupedStudents = (studentList, groups) => {
   let allStudents = Object.keys(studentList);
   let grouped = [];
-  Object.keys(groups).forEach((key, index) => {
-    groups[key].forEach((studentId, i) => {
+  Object.keys(groups).forEach(key => {
+    groups[key].forEach(studentId => {
       grouped.push(studentId);
     });
   });
-  let ungrouped = [];
-  ungrouped = allStudents.filter(x => !grouped.includes(x));
+  let ungrouped = allStudents.filter(x => !grouped.includes(x));
   return ungrouped;
 };
 

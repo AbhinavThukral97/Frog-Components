@@ -25,7 +25,9 @@ const useStyle = makeStyles(theme => ({
   },
   text: {
     fontSize: "12px",
-    padding: theme.spacing(1, 2)
+    color: blueGrey[700],
+    padding: theme.spacing(1, 1.5),
+    textAlign: "left"
   },
   label: {
     height: theme.spacing(1),

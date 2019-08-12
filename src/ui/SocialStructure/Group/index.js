@@ -8,7 +8,7 @@ const useStyle = makeStyles(theme => ({
   root: {
     display: "flex",
     flexWrap: "wrap",
-    width: "150px",
+    width: "160px",
     border: `1px solid ${blueGrey[50]}`,
     background: "#FFF",
     margin: theme.spacing(1)
@@ -26,7 +26,7 @@ const useStyle = makeStyles(theme => ({
     margin: theme.spacing(0, 1)
   },
   message: {
-    fontSize: "10px",
+    fontSize: "12px",
     color: blueGrey[300],
     margin: theme.spacing(1, 1)
   },
