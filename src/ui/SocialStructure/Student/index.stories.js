@@ -12,6 +12,12 @@ const storybookParent = {
 
 storiesOf("Social Structure/Student", module).add("Simple", () => (
   <div style={storybookParent}>
+    <Student userName={name} />
+  </div>
+));
+
+storiesOf("Social Structure/Student", module).add("With Label", () => (
+  <div style={storybookParent}>
     <Student userName={name} labelColor={color} />
   </div>
 ));
