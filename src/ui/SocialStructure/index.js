@@ -23,13 +23,13 @@ type SocialStructureProps = {
   students: object,
   groupingKey: string,
   socialStructure: {
-    groups: object,
-    onChange: (
-      studentId: string,
-      groupingKey: string,
-      groupingValue: string
-    ) => void
-  }
+    groups: object
+  },
+  onChange: (
+    studentId: string,
+    groupingKey: string,
+    groupingValue: string
+  ) => void
 };
 
 export const SocialStructure = (props: SocialStructureProps) => {
