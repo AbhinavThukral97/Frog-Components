@@ -17,3 +17,16 @@ storiesOf("Social Structure/Group", module).add("Simple", () => (
     studentsKey={students}
   />
 ));
+
+storiesOf("Social Structure/Group", module).add("No Students", () => (
+  <Group groupId={group.name} studentList={[]} studentsKey={students} />
+));
+
+storiesOf("Social Structure/Group", module).add("Student List Variant", () => (
+  <Group
+    groupId={group.name}
+    studentList={group.students}
+    studentsKey={students}
+    variant="list"
+  />
+));

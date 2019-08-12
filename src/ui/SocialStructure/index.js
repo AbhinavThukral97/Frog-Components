@@ -32,10 +32,33 @@ type SocialStructureProps = {
   ) => void
 };
 
+const ungroupedStudents = (studentList, groups) => {
+  let allStudents = Object.keys(studentList);
+  let grouped = [];
+  Object.keys(groups).forEach((key, index) => {
+    groups[key].forEach((studentId, i) => {
+      grouped.push(studentId);
+    });
+  });
+  let ungrouped = [];
+  ungrouped = allStudents.filter(x => !grouped.includes(x));
+  return ungrouped;
+};
+
 export const SocialStructure = (props: SocialStructureProps) => {
   const classes = useStyle();
+
   return (
     <div className={classes.root}>
+      <Group
+        groupId={"Ungrouped"}
+        studentList={ungroupedStudents(
+          props.students,
+          props.socialStructure.groups
+        )}
+        studentsKey={props.students}
+        variant="list"
+      />
       {Object.keys(props.socialStructure[props.groupingKey]).map(
         (groupKey, index) => (
           <Group

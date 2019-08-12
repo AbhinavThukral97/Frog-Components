@@ -25,6 +25,11 @@ const useStyle = makeStyles(theme => ({
     color: blueGrey[300],
     margin: theme.spacing(0, 1)
   },
+  message: {
+    fontSize: "10px",
+    color: blueGrey[300],
+    margin: theme.spacing(1, 1)
+  },
   badge: {
     transform: "translate(-50%,0)"
   }
@@ -32,8 +37,9 @@ const useStyle = makeStyles(theme => ({
 
 type GroupProps = {
   groupId: string,
-  studentList: Array<>,
-  studentsKey: object
+  studentList?: Array<>,
+  studentsKey: object,
+  variant?: string
 };
 
 export const Group = (props: GroupProps) => {
@@ -41,18 +47,22 @@ export const Group = (props: GroupProps) => {
   return (
     <div className={classes.root}>
       <div className={classes.header}>
-        <Typography variant="overline" className={classes.text}>{`Group ${
-          props.groupId
-        }`}</Typography>
+        <Typography variant="overline" className={classes.text}>
+          {props.variant === "list" ? "Student List" : `Group ${props.groupId}`}
+        </Typography>
         <Badge
           badgeContent={props.studentList.length}
-          color="primary"
+          color={props.variant === "list" ? "primary" : "secondary"}
           className={classes.badge}
         />
       </div>
-      {props.studentList.map((student, index) => (
-        <Student userName={props.studentsKey[student]} />
-      ))}
+      {props.studentList.length > 0 ? (
+        props.studentList.map((student, index) => (
+          <Student userName={props.studentsKey[student]} />
+        ))
+      ) : (
+        <Typography className={classes.message}>No Students</Typography>
+      )}
     </div>
   );
 };
