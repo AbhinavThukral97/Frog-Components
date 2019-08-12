@@ -7,7 +7,7 @@ const useStyle = makeStyles(theme => ({
   root: {
     display: "flex",
     flexWrap: "wrap",
-    justifyContent: "center",
+    justifyContent: "flext-start",
     alignItems: "flex-start",
     width: "100%",
     margin: theme.spacing(1)
