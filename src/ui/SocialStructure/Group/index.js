@@ -1,9 +1,10 @@
 import * as React from "react";
 import { makeStyles, Badge, Typography } from "@material-ui/core";
-import { amber, blueGrey } from "@material-ui/core/colors";
-import { useDrop } from "react-dnd";
+import { blueGrey } from "@material-ui/core/colors";
+import { Droppable } from "react-beautiful-dnd";
 
 import { Student } from "../Student";
+import { StudentList } from "../StudentList";
 
 const useStyle = makeStyles(theme => ({
   root: {
@@ -14,9 +15,6 @@ const useStyle = makeStyles(theme => ({
     background: "#FFF",
     margin: theme.spacing(1),
     transition: ".25s ease"
-  },
-  groupHover: {
-    boxShadow: `0 0 0 0.2rem ${amber[100]}`
   },
   header: {
     display: "flex",
@@ -47,27 +45,11 @@ type GroupProps = {
   variant?: string
 };
 
-const moveStudent = (group, student) => {
-  console.log(`StudentId: '${student}' moved to Group '${group}'`);
-};
-
 export const Group = (props: GroupProps) => {
   const classes = useStyle();
 
-  const [{ isOver, item }, drop] = useDrop({
-    accept: "student",
-    drop: () => moveStudent(props.groupId, item.studentId),
-    collect: mon => ({
-      isOver: !!mon.isOver(),
-      item: mon.getItem()
-    })
-  });
-
   return (
-    <div
-      className={`${classes.root} ${isOver ? classes.groupHover : ""}`}
-      ref={drop}
-    >
+    <div className={classes.root}>
       <div className={classes.header}>
         <Typography variant="overline" className={classes.text}>
           {props.variant === "list" ? "Student List" : `Group ${props.groupId}`}
@@ -78,17 +60,25 @@ export const Group = (props: GroupProps) => {
           className={classes.badge}
         />
       </div>
-      {props.studentList.length > 0 ? (
-        props.studentList.map((student, index) => (
-          <Student
-            userName={props.studentsKey[student]}
-            userId={student}
-            key={student}
-          />
-        ))
-      ) : (
-        <Typography className={classes.message}>No Students</Typography>
-      )}
+      <Droppable droppableId={props.groupId}>
+        {provided => (
+          <StudentList provided={provided} innerRef={provided.innerRef}>
+            {props.studentList.length > 0 ? (
+              props.studentList.map((student, index) => (
+                <Student
+                  userName={props.studentsKey[student]}
+                  userId={student}
+                  key={student}
+                  index={index}
+                />
+              ))
+            ) : (
+              <Typography className={classes.message}>No Students</Typography>
+            )}
+            {provided.placeholder}
+          </StudentList>
+        )}
+      </Droppable>
     </div>
   );
 };

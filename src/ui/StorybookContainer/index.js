@@ -1,7 +1,6 @@
 import * as React from "react";
 import { makeStyles } from "@material-ui/core";
-import { DndProvider } from "react-dnd";
-import HTML5Backend from "react-dnd-html5-backend";
+import { DragDropContext } from "react-beautiful-dnd";
 
 const useStyle = makeStyles(theme => ({
   root: {
@@ -19,10 +18,10 @@ export const StorybookContainer = (props: StorybookContainerProps) => {
   const classes = useStyle();
 
   return (
-    <DndProvider backend={HTML5Backend}>
+    <DragDropContext onDragEnd={() => {}}>
       <div className={classes.root} style={{ width: props.width }}>
         {props.children}
       </div>
-    </DndProvider>
+    </DragDropContext>
   );
 };

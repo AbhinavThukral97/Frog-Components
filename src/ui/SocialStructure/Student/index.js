@@ -1,7 +1,9 @@
 import * as React from "react";
 import { makeStyles, Typography } from "@material-ui/core";
-import { blueGrey } from "@material-ui/core/colors";
-import { useDrag } from "react-dnd";
+import { blueGrey, amber } from "@material-ui/core/colors";
+import { Draggable } from "react-beautiful-dnd";
+
+import { Container } from "../Container";
 
 const useStyle = makeStyles(theme => ({
   root: {
@@ -21,7 +23,9 @@ const useStyle = makeStyles(theme => ({
     userSelect: "none",
 
     "&:active": {
-      background: blueGrey[50]
+      background: blueGrey[50],
+      transform: "scale(1.05)",
+      boxShadow: `0 0 20px rgba(0,0,0,.1)`
     }
   },
   text: {
@@ -41,26 +45,27 @@ const useStyle = makeStyles(theme => ({
 type StudentProps = {
   userId: string,
   userName: string,
+  index?: number,
   labelColor?: string
 };
 
 export const Student = (props: StudentProps) => {
   const classes = useStyle();
-
-  const [{ isDragging }, drag] = useDrag({
-    item: { studentId: props.userId, type: "student" },
-    collect: monitor => ({
-      isDragging: !!monitor.isDragging()
-    })
-  });
-
   return (
-    <div className={`${classes.root} ${classes.draggable}`} ref={drag}>
-      <Typography className={classes.text}>{props.userName}</Typography>
-      <div
-        className={classes.label}
-        style={{ background: props.labelColor ? props.labelColor : "none" }}
-      />
-    </div>
+    <Draggable draggableId={props.userId} index={props.index}>
+      {provided => (
+        <Container provided={provided} innerRef={provided.innerRef}>
+          <div className={`${classes.root} ${classes.draggable}`}>
+            <Typography className={classes.text}>{props.userName}</Typography>
+            <div
+              className={classes.label}
+              style={{
+                background: props.labelColor ? props.labelColor : "none"
+              }}
+            />
+          </div>
+        </Container>
+      )}
+    </Draggable>
   );
 };

@@ -1,7 +1,6 @@
 import * as React from "react";
 import { makeStyles } from "@material-ui/core";
-import { DndProvider } from "react-dnd";
-import HTML5Backend from "react-dnd-html5-backend";
+import { DragDropContext } from "react-beautiful-dnd";
 
 import { Group } from "./Group";
 
@@ -49,8 +48,17 @@ const ungroupedStudents = (studentList, groups) => {
 export const SocialStructure = (props: SocialStructureProps) => {
   const classes = useStyle();
 
+  const onDragEnd = result => {
+    let destination = result.destination.droppableId;
+    let source = result.source.droppableId;
+    let student = result.draggableId;
+    console.log(
+      `${student} was moved from group ${source} to group ${destination}`
+    );
+  };
+
   return (
-    <DndProvider backend={HTML5Backend}>
+    <DragDropContext onDragEnd={onDragEnd}>
       <div className={classes.root}>
         <Group
           key="Ungrouped"
@@ -73,6 +81,6 @@ export const SocialStructure = (props: SocialStructureProps) => {
           )
         )}
       </div>
-    </DndProvider>
+    </DragDropContext>
   );
 };
