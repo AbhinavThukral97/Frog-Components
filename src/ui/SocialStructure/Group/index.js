@@ -58,7 +58,7 @@ export const Group = (props: GroupProps) => {
       </div>
       {props.studentList.length > 0 ? (
         props.studentList.map((student, index) => (
-          <Student userName={props.studentsKey[student]} />
+          <Student userName={props.studentsKey[student]} key={student} />
         ))
       ) : (
         <Typography className={classes.message}>No Students</Typography>

@@ -61,6 +61,7 @@ export const SocialStructure = (props: SocialStructureProps) => {
       {Object.keys(props.socialStructure[props.groupingKey]).map(
         (groupKey, index) => (
           <Group
+            key={groupKey}
             groupId={groupKey}
             studentList={props.socialStructure[props.groupingKey][groupKey]}
             studentsKey={props.students}
