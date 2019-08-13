@@ -1,6 +1,7 @@
 import * as React from "react";
 import { makeStyles, Badge, Typography } from "@material-ui/core";
-import { blueGrey } from "@material-ui/core/colors";
+import { amber, blueGrey } from "@material-ui/core/colors";
+import { useDrop } from "react-dnd";
 
 import { Student } from "../Student";
 
@@ -11,7 +12,11 @@ const useStyle = makeStyles(theme => ({
     width: "160px",
     border: `1px solid ${blueGrey[50]}`,
     background: "#FFF",
-    margin: theme.spacing(1)
+    margin: theme.spacing(1),
+    transition: ".25s ease"
+  },
+  groupHover: {
+    boxShadow: `0 0 0 0.2rem ${amber[100]}`
   },
   header: {
     display: "flex",
@@ -42,10 +47,27 @@ type GroupProps = {
   variant?: string
 };
 
+const moveStudent = (group, student) => {
+  console.log(`StudentId: '${student}' moved to Group '${group}'`);
+};
+
 export const Group = (props: GroupProps) => {
   const classes = useStyle();
+
+  const [{ isOver, item }, drop] = useDrop({
+    accept: "student",
+    drop: () => moveStudent(props.groupId, item.studentId),
+    collect: mon => ({
+      isOver: !!mon.isOver(),
+      item: mon.getItem()
+    })
+  });
+
   return (
-    <div className={classes.root}>
+    <div
+      className={`${classes.root} ${isOver ? classes.groupHover : ""}`}
+      ref={drop}
+    >
       <div className={classes.header}>
         <Typography variant="overline" className={classes.text}>
           {props.variant === "list" ? "Student List" : `Group ${props.groupId}`}
@@ -58,7 +80,11 @@ export const Group = (props: GroupProps) => {
       </div>
       {props.studentList.length > 0 ? (
         props.studentList.map((student, index) => (
-          <Student userName={props.studentsKey[student]} key={student} />
+          <Student
+            userName={props.studentsKey[student]}
+            userId={student}
+            key={student}
+          />
         ))
       ) : (
         <Typography className={classes.message}>No Students</Typography>

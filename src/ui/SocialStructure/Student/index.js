@@ -1,8 +1,7 @@
 import * as React from "react";
 import { makeStyles, Typography } from "@material-ui/core";
 import { blueGrey } from "@material-ui/core/colors";
-
-const dragHighlight = blueGrey[50];
+import { useDrag } from "react-dnd";
 
 const useStyle = makeStyles(theme => ({
   root: {
@@ -10,17 +9,19 @@ const useStyle = makeStyles(theme => ({
     justifyContent: "space-between",
     alignItems: "center",
     width: "100%",
-    borderBottom: `1px solid ${dragHighlight}`
+    borderBottom: `1px solid ${blueGrey[50]}`,
+
+    "&:last-child": {
+      borderBottom: "0px"
+    }
   },
   draggable: {
-    cursor: "pointer",
-    transition: ".5s ease",
+    cursor: "grab",
+    transition: ".25s ease",
     userSelect: "none",
 
     "&:active": {
-      background: dragHighlight,
-      transform: "scale(1.05)",
-      boxShadow: `0px 0px 10px ${dragHighlight}`
+      background: blueGrey[50]
     }
   },
   text: {
@@ -38,14 +39,23 @@ const useStyle = makeStyles(theme => ({
 }));
 
 type StudentProps = {
+  userId: string,
   userName: string,
   labelColor?: string
 };
 
 export const Student = (props: StudentProps) => {
   const classes = useStyle();
+
+  const [{ isDragging }, drag] = useDrag({
+    item: { studentId: props.userId, type: "student" },
+    collect: monitor => ({
+      isDragging: !!monitor.isDragging()
+    })
+  });
+
   return (
-    <div className={`${classes.root} ${classes.draggable}`}>
+    <div className={`${classes.root} ${classes.draggable}`} ref={drag}>
       <Typography className={classes.text}>{props.userName}</Typography>
       <div
         className={classes.label}

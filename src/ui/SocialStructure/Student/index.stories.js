@@ -2,22 +2,19 @@ import * as React from "react";
 import { storiesOf } from "@storybook/react";
 
 import { Student } from ".";
+import { StorybookContainer } from "../../StorybookContainer";
 
 const name = "Abhinav";
 const color = "#FFCC66";
-const storybookParent = {
-  width: "150px",
-  margin: "10px"
-};
 
 storiesOf("Social Structure/Student", module).add("Simple", () => (
-  <div style={storybookParent}>
+  <StorybookContainer>
     <Student userName={name} />
-  </div>
+  </StorybookContainer>
 ));
 
 storiesOf("Social Structure/Student", module).add("With Label", () => (
-  <div style={storybookParent}>
+  <StorybookContainer>
     <Student userName={name} labelColor={color} />
-  </div>
+  </StorybookContainer>
 ));

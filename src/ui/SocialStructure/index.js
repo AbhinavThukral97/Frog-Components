@@ -1,5 +1,7 @@
 import * as React from "react";
 import { makeStyles } from "@material-ui/core";
+import { DndProvider } from "react-dnd";
+import HTML5Backend from "react-dnd-html5-backend";
 
 import { Group } from "./Group";
 
@@ -48,26 +50,29 @@ export const SocialStructure = (props: SocialStructureProps) => {
   const classes = useStyle();
 
   return (
-    <div className={classes.root}>
-      <Group
-        groupId={"Ungrouped"}
-        studentList={ungroupedStudents(
-          props.students,
-          props.socialStructure.groups
+    <DndProvider backend={HTML5Backend}>
+      <div className={classes.root}>
+        <Group
+          key="Ungrouped"
+          groupId="Ungrouped"
+          studentList={ungroupedStudents(
+            props.students,
+            props.socialStructure.groups
+          )}
+          studentsKey={props.students}
+          variant="list"
+        />
+        {Object.keys(props.socialStructure[props.groupingKey]).map(
+          (groupKey, index) => (
+            <Group
+              key={groupKey}
+              groupId={groupKey}
+              studentList={props.socialStructure[props.groupingKey][groupKey]}
+              studentsKey={props.students}
+            />
+          )
         )}
-        studentsKey={props.students}
-        variant="list"
-      />
-      {Object.keys(props.socialStructure[props.groupingKey]).map(
-        (groupKey, index) => (
-          <Group
-            key={groupKey}
-            groupId={groupKey}
-            studentList={props.socialStructure[props.groupingKey][groupKey]}
-            studentsKey={props.students}
-          />
-        )
-      )}
-    </div>
+      </div>
+    </DndProvider>
   );
 };
