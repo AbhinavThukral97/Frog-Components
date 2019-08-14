@@ -3,7 +3,6 @@ import { storiesOf } from "@storybook/react";
 import { Droppable } from "react-beautiful-dnd";
 
 import { Student } from ".";
-import { StudentList } from "../StudentList";
 import { StorybookContainer } from "../../StorybookContainer";
 
 const student = {
@@ -17,14 +16,14 @@ storiesOf("Social Structure/Student", module).add("Simple", () => (
   <StorybookContainer>
     <Droppable droppableId={"Testing"}>
       {provided => (
-        <StudentList provided={provided} innerRef={provided.innerRef}>
+        <div {...provided.droppableProps} ref={provided.innerRef}>
           <Student
             userName={student.name}
             userId={student.id}
             index={student.index}
           />
           {provided.placeholder}
-        </StudentList>
+        </div>
       )}
     </Droppable>
   </StorybookContainer>
@@ -34,7 +33,7 @@ storiesOf("Social Structure/Student", module).add("With Label", () => (
   <StorybookContainer>
     <Droppable droppableId={"Testing"}>
       {provided => (
-        <StudentList provided={provided} innerRef={provided.innerRef}>
+        <div {...provided.droppableProps} ref={provided.innerRef}>
           <Student
             userName={student.name}
             userId={student.id}
@@ -42,7 +41,7 @@ storiesOf("Social Structure/Student", module).add("With Label", () => (
             labelColor={student.color}
           />
           {provided.placeholder}
-        </StudentList>
+        </div>
       )}
     </Droppable>
   </StorybookContainer>

@@ -8,23 +8,17 @@ const useStyle = makeStyles(theme => ({
   root: {
     display: "flex",
     flexWrap: "wrap",
-    justifyContent: "flext-start",
     alignItems: "flex-start",
-    width: "90%",
-    margin: theme.spacing(1)
-  },
-  button: {
-    display: "flex",
-    alignSelf: "flex-start",
+    width: "100%",
     margin: theme.spacing(1)
   }
 }));
 
 type SocialStructureProps = {
-  students: object,
+  students: { [key: string]: string },
   groupingKey: string,
   socialStructure: {
-    groups: object
+    groups: { [key: string]: string[] }
   },
   onChange: (
     studentId: string,
@@ -33,7 +27,7 @@ type SocialStructureProps = {
   ) => void
 };
 
-const ungroupedStudents = (studentList, groups) => {
+const getUngroupedStudents = (studentList, groups) => {
   let allStudents = Object.keys(studentList);
   let grouped = [];
   Object.keys(groups).forEach(key => {
@@ -49,23 +43,27 @@ export const SocialStructure = (props: SocialStructureProps) => {
   const classes = useStyle();
 
   const onDragEnd = result => {
-    let destination = result.destination.droppableId;
-    let source = result.source.droppableId;
-    let student = result.draggableId;
-    console.log(
-      `${student} was moved from group ${source} to group ${destination}`
-    );
+    if (result.destination) {
+      let destination = result.destination.droppableId;
+      let source = result.source.droppableId;
+      if (destination !== source) {
+        let student = result.draggableId;
+        console.log(
+          `${student} was moved from group ${source} to group ${destination}`
+        );
+      }
+    }
   };
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
       <div className={classes.root}>
         <Group
-          key="Ungrouped"
-          groupId="Ungrouped"
-          studentList={ungroupedStudents(
+          key="Student List"
+          groupId="Student List"
+          studentList={getUngroupedStudents(
             props.students,
-            props.socialStructure.groups
+            props.socialStructure[props.groupingKey]
           )}
           studentsKey={props.students}
           variant="list"

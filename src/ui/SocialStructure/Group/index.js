@@ -4,7 +4,6 @@ import { blueGrey } from "@material-ui/core/colors";
 import { Droppable } from "react-beautiful-dnd";
 
 import { Student } from "../Student";
-import { StudentList } from "../StudentList";
 
 const useStyle = makeStyles(theme => ({
   root: {
@@ -25,7 +24,7 @@ const useStyle = makeStyles(theme => ({
   },
   text: {
     fontSize: "10px",
-    color: blueGrey[300],
+    color: blueGrey[400],
     margin: theme.spacing(0, 1)
   },
   message: {
@@ -35,14 +34,19 @@ const useStyle = makeStyles(theme => ({
   },
   badge: {
     transform: "translate(-50%,0)"
+  },
+  container: {
+    display: "flex",
+    flexWrap: "wrap",
+    width: "100%"
   }
 }));
 
 type GroupProps = {
   groupId: string,
-  studentList?: Array<>,
-  studentsKey: object,
-  variant?: string
+  studentList?: string[],
+  studentsKey: { [key: string]: string },
+  variant?: "list" | "default"
 };
 
 export const Group = (props: GroupProps) => {
@@ -62,7 +66,11 @@ export const Group = (props: GroupProps) => {
       </div>
       <Droppable droppableId={props.groupId}>
         {provided => (
-          <StudentList provided={provided} innerRef={provided.innerRef}>
+          <div
+            className={classes.container}
+            {...provided.droppableProps}
+            ref={provided.innerRef}
+          >
             {props.studentList.length > 0 ? (
               props.studentList.map((student, index) => (
                 <Student
@@ -76,7 +84,7 @@ export const Group = (props: GroupProps) => {
               <Typography className={classes.message}>No Students</Typography>
             )}
             {provided.placeholder}
-          </StudentList>
+          </div>
         )}
       </Droppable>
     </div>
