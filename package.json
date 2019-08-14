@@ -7,7 +7,6 @@
     "@material-ui/icons": "^4.2.1",
     "react": "^16.9.0",
     "react-beautiful-dnd": "^11.0.5",
-    "react-dnd-html5-backend": "^9.3.4",
     "react-dom": "^16.9.0",
     "react-scripts": "3.1.0"
   },
