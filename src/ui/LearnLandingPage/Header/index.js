@@ -20,10 +20,6 @@ const useStyle = makeStyles(theme => ({
     textTransform: "uppercase",
     letterSpacing: "2px",
     color: blueGrey[600]
-  },
-  icon: {
-    fontSize: "16px",
-    marginRight: theme.spacing(1)
   }
 }));
 
