@@ -1,16 +1,10 @@
 import React from "react";
-import logo from "./logo.svg";
-import "./App.css";
-import { SocialStructure } from "./ui/SocialStructure";
+import { LandingPage } from "./ui/LandingPage";
 
 function App() {
   return (
     <div className="App">
-      <SocialStructure
-        socialStructure={{ groups: { "1": ["a1", "a2"] } }}
-        groupingKey="groups"
-        students={{ a1: "Creatively Named Student", a2: "Student 2" }}
-      />
+      <LandingPage />
     </div>
   );
 }

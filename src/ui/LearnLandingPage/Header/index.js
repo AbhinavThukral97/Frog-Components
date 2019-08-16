@@ -1,7 +1,6 @@
 import * as React from "react";
-import { makeStyles, Typography, Button } from "@material-ui/core";
-import { blueGrey, indigo } from "@material-ui/core/colors";
-import HomeIcon from "@material-ui/icons/Home";
+import { makeStyles, Typography } from "@material-ui/core";
+import { blueGrey } from "@material-ui/core/colors";
 
 const useStyle = makeStyles(theme => ({
   root: {
